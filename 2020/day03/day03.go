@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"strings"
 )
 
@@ -19,15 +18,11 @@ func count(m []string, s []int) int {
 }
 
 func main() {
-	file, err := ioutil.ReadFile("./input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	file, _ := ioutil.ReadFile("./input.txt")
 	lines := strings.Split(string(file), "\n")
 
-	slopes := [][]int{{1, 1}, {3, 1}, {5, 1}, {7, 1}, {1, 2}}
 	ans := 1
+	slopes := [][]int{{1, 1}, {3, 1}, {5, 1}, {7, 1}, {1, 2}}
 	for _, slope := range slopes {
 		ans *= count(lines, slope)
 	}
