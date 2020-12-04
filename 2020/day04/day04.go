@@ -36,8 +36,7 @@ func main() {
 }
 
 func validate(p string) bool {
-	re := regexp.MustCompile(`[:\s]`)
-	sp := re.Split(p, -1)[1:]
+	sp := regexp.MustCompile(`[:\s]`).Split(p, -1)[1:]
 	m := map[string]string{}
 	for i := 0; i < len(sp)-1; i += 2 {
 		m[sp[i]] = sp[i+1]
