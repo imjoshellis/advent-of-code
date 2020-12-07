@@ -90,7 +90,7 @@ func main() {
 			// the first element will be the count
 			count, _ := strconv.Atoi(split[0])
 
-			// the second element is the color
+			// the rest of the elements are the color
 			color := Color(strings.Join(split[1:], " "))
 
 			// if the bag is in the graph...
