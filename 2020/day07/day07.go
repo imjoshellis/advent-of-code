@@ -9,45 +9,45 @@ import (
 
 type Color string
 
-type Bag struct {
+type BagNode struct {
 	color Color
 }
 
 type BagEdge struct {
-	bag   *Bag
+	bag   *BagNode
 	count int
 }
 
 type BagGraph struct {
-	bags  map[Color]*Bag
-	edges map[Bag][]*BagEdge
+	bags  map[Color]*BagNode
+	edges map[BagNode][]*BagEdge
 }
 
 // ToString serializes a bag to string
-func (b *Bag) ToString() string {
+func (b *BagNode) ToString() string {
 	return fmt.Sprintf("%v", b.color)
 }
 
 // AddBag adds a bag (node) to the graph
-func (g *BagGraph) AddBag(b *Bag) *Bag {
+func (g *BagGraph) AddBag(b *BagNode) *BagNode {
 	if g.bags == nil {
-		g.bags = make(map[Color]*Bag)
+		g.bags = make(map[Color]*BagNode)
 	}
 	g.bags[b.color] = b
 	return b
 }
 
 // AddEdge adds a directional edge to the graph
-func (g *BagGraph) AddEdge(b1, b2 *Bag, count int) {
+func (g *BagGraph) AddEdge(b1, b2 *BagNode, count int) {
 	if g.edges == nil {
-		g.edges = make(map[Bag][]*BagEdge)
+		g.edges = make(map[BagNode][]*BagEdge)
 	}
 	edge := BagEdge{b2, count}
 	g.edges[*b1] = append(g.edges[*b1], &edge)
 }
 
 // GetBag is a wrapper for looking up bags in the bag map
-func (g *BagGraph) GetBag(c Color) (*Bag, bool) {
+func (g *BagGraph) GetBag(c Color) (*BagNode, bool) {
 	bag, ok := g.bags[c]
 	return bag, ok
 }
@@ -79,7 +79,7 @@ func main() {
 		bag, ok := graph.GetBag(color)
 		if !ok {
 			// if bag isn't in graph, make new and add
-			bag = graph.AddBag(&Bag{color: color})
+			bag = graph.AddBag(&BagNode{color: color})
 		}
 
 		// iterate over edges
@@ -99,7 +99,7 @@ func main() {
 				graph.AddEdge(bag, bag2, count)
 			} else {
 				// ...otherwise, make a new bag and add it as an edge
-				bag2 := graph.AddBag(&Bag{color: color})
+				bag2 := graph.AddBag(&BagNode{color: color})
 				graph.AddEdge(bag, bag2, count)
 			}
 		}
@@ -120,10 +120,10 @@ func main() {
 	fmt.Println("shiny gold would have", sg.CountInside(&graph), "bags inside it")
 }
 
-func (b *Bag) CountInside(g *BagGraph) (count int) {
+func (b *BagNode) CountInside(g *BagGraph) (count int) {
 	// special type for the stack
 	type BagStack struct {
-		bag   Bag
+		bag   BagNode
 		count int
 	}
 	st := []BagStack{{bag: *b, count: 1}}
@@ -150,12 +150,12 @@ func (b *Bag) CountInside(g *BagGraph) (count int) {
 	return count - 1
 }
 
-func (b *Bag) CanContain(c Color, g *BagGraph) bool {
+func (b *BagNode) CanContain(c Color, g *BagGraph) bool {
 	// initialize visited map
-	visited := make(map[Bag]bool)
+	visited := make(map[BagNode]bool)
 
 	// initialize stack of bags
-	st := []Bag{*b}
+	st := []BagNode{*b}
 
 	// loop until stack is empty
 	for len(st) > 0 {
