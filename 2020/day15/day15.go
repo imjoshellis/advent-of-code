@@ -13,8 +13,8 @@ func main() {
 
 	nxt := 17
 	for i := 6; i < 30000000-1; i++ {
-		if idx, ok := m[nxt]; ok {
-			nxt, m[nxt] = i-idx, i
+		if prev, ok := m[nxt]; ok {
+			nxt, m[nxt] = i-prev, i
 		} else {
 			nxt, m[nxt] = 0, i
 		}
