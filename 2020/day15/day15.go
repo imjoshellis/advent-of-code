@@ -16,7 +16,7 @@ func main() {
 		if idx, ok := m[nxt]; ok {
 			nxt, m[nxt] = i-idx, i
 		} else {
-			m[nxt], nxt = i, 0
+			nxt, m[nxt] = 0, i
 		}
 	}
 
