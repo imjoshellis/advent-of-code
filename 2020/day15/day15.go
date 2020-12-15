@@ -11,14 +11,14 @@ func main() {
 		m[n] = i
 	}
 
-	nxt := 17
+	next := 17
 	for i := 6; i < 30000000-1; i++ {
-		if prev, ok := m[nxt]; ok {
-			nxt, m[nxt] = i-prev, i
+		if prev, ok := m[next]; ok {
+			next, m[next] = i-prev, i
 		} else {
-			nxt, m[nxt] = 0, i
+			next, m[next] = 0, i
 		}
 	}
 
-	fmt.Println(nxt)
+	fmt.Println(next)
 }
