@@ -7,14 +7,21 @@ import (
 
 func main() {
 	t := time.Now()
-	ns := []int{0, 12, 6, 13, 20, 1}
+	initial := []int{0, 12, 6, 13, 20, 1, 17}
+	target := 30000000
+	fmt.Println(getNth(initial, target))
+	fmt.Println(time.Since(t))
+}
+
+func getNth(initial []int, target int) int {
+	l := len(initial) - 1
+	next, ns := initial[l], initial[:l]
 	m := make(map[int]int)
-	for i, n := range ns {
+	for i, n := range initial {
 		m[n] = i
 	}
 
-	next := 17
-	for i := 6; i < 30000000-1; i++ {
+	for i := len(ns); i < target-1; i++ {
 		if prev, ok := m[next]; ok {
 			next, m[next] = i-prev, i
 		} else {
@@ -22,6 +29,5 @@ func main() {
 		}
 	}
 
-	fmt.Println(next)
-	fmt.Println(time.Since(t))
+	return next
 }
