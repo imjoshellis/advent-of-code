@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func main() {
+	t := time.Now()
 	ns := []int{0, 12, 6, 13, 20, 1}
 	m := make(map[int]int)
 	for i, n := range ns {
@@ -21,4 +23,5 @@ func main() {
 	}
 
 	fmt.Println(next)
+	fmt.Println(time.Since(t))
 }
