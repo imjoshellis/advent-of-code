@@ -27,8 +27,8 @@ func main() {
 	count := 0
 	for w := range grid {
 		for z := range grid {
-			for y := range grid[z] {
-				for x := range grid[z][y] {
+			for y := range grid {
+				for x := range grid {
 					count += grid[w][z][y][x]
 				}
 			}
@@ -44,11 +44,11 @@ func initialize(input []string) Grid {
 	offset := (size - inWidth) / 2
 	for w := range grid {
 		grid[w] = make([][][]int, size)
-		for z := range grid[w] {
+		for z := range grid {
 			grid[w][z] = make([][]int, size)
-			for y := range grid[w][z] {
+			for y := range grid {
 				grid[w][z][y] = make([]int, size)
-				for x := range grid[w][z][y] {
+				for x := range grid {
 					grid[w][z][y][x] = 0
 					if z == 6 && w == 6 && x >= offset && x < offset+inWidth && y >= offset && y < offset+inWidth && input[y-offset][x-offset] == '#' {
 						grid[w][z][y][x] = 1
@@ -64,20 +64,20 @@ func (g *Grid) update() {
 	old := make(Grid, len(*g))
 	for w := range *g {
 		old[w] = make([][][]int, len(*g))
-		for z := range (*g)[w] {
+		for z := range *g {
 			old[w][z] = make([][]int, len(*g))
-			for y := range (*g)[w][z] {
+			for y := range *g {
 				old[w][z][y] = make([]int, len(*g))
-				for x := range (*g)[w][z][y] {
+				for x := range *g {
 					old[w][z][y][x] = (*g)[w][z][y][x]
 				}
 			}
 		}
 	}
 	for w := range old {
-		for z := range old[w] {
-			for y := range old[w][z] {
-				for x := range old[w][z][y] {
+		for z := range old {
+			for y := range old {
+				for x := range old {
 					(*g)[w][z][y][x] = nextCell(old, Position{x, y, z, w})
 				}
 			}
